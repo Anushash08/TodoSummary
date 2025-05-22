@@ -16,4 +16,4 @@ db.settings({ ignoreUndefinedProperties: true });
 const employeesRef = db.collection("employees");
 const departmentRef = db.collection("departments");
 
-export { auth, db, employeesRef, departmentRef }
+export { employeesRef, departmentRef }
