@@ -30,90 +30,24 @@ router.delete("/todos/:id", async (req, res) => {
   res.json({ success: true });
 });
 
-// POST /summarize - Use OpenAI and send to Slack
-// router.post("/summarize", async (req, res) => {
-//   try {
-//     const snapshot = await db.collection("todos").get();
-//     const todos = snapshot.docs.map((doc) => doc.data().title);
 
-//     const prompt = `Summarize the following TODOs:\n\n${todos.join("\n")}`;
 
-//     const aiResponse = await openai.chat.completions.create({
-//       model: "gpt-3.5-turbo",
-//       messages: [{ role: "user", content: prompt }],
-//     });
 
-//     const summary = aiResponse.choices[0].message.content;
 
-//     // Send to Slack
-//     await axios.post(process.env.SLACK_WEBHOOK_URL, {
-//       text: `📝 *Todo Summary:*\n${summary}`,
-//     });
+import dotenv from 'dotenv';
+dotenv.config();
 
-//     res.json({ success: true, summary });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Failed to summarize and send to Slack." });
-//   }
-// // });
-// const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
-// const DEEPSEEK_API_KEY = "sk-a217b4adca8145fcbeec2831751d7f14";
-const DEEPSEEK_API_KEY  = "sk-a217b4adca8145fcbeec2831751d7f14"
-const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
+// const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
+// const DEEPSEEK_API_URL = process.env.DEEPSEEK_API_URL;
 
-// router.post("/summarize", async (req, res) => {
-//   try {
-//     const snapshot = await db.collection("todos").get();
-//     const todos = snapshot.docs.map((doc) => doc.data().title);
 
-//     if (!todos.length) {
-//       return res.status(400).json({ error: "No todos to summarize." });
-//     }
-
-//     // Prepare prompt as bullet list
-//     const todoListText = todos.map((t) => `- ${t}`).join("\n");
-
-//     const prompt = `Summarize the following to-do items into a concise, clear summary:\n${todoListText}\nSummary:`;
-
-//     // Call DeepSeek API
-//     const response = await axios.post(
-//       DEEPSEEK_API_URL,
-//       {
-//         model: "deepseek-chat",
-//         messages: [
-//           {
-//             role: "system",
-//             content:
-//               "You are a helpful assistant that summarizes to-do lists clearly and briefly.",
-//           },
-//           { role: "user", content: prompt },
-//         ],
-//         max_tokens: 150,
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-
-//     const summary = response.data.choices[0].message.content;
-
-//     // Send summary to Slack webhook
-//     await axios.post(process.env.SLACK_WEBHOOK_URL, {
-//       text: `📝 *Todo Summary:*\n${summary}`,
-//     });
-
-//     res.json({ success: true, summary });
-//   } catch (err) {
-//     console.error(err.response?.data || err.message);
-//     res.status(500).json({ error: "Failed to summarize and send to Slack." });
-//   }
-// });
-
+const DEEPSEEK_API_KEY = "sk-a217b4adca8145fcbeec2831751d7f14";
+const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
 router.post("/summarize", async (req, res) => {
+    console.log("DEEPSEEK_API_KEY in todo.js:", process.env.DEEPSEEK_API_KEY);
+console.log("DEEPSEEK_API_URL in todo.js:", process.env.DEEPSEEK_API_URL);
   try {
+    console.log("url   ",DEEPSEEK_API_URL)
     const snapshot = await db.collection("todos").get();
     const todos = snapshot.docs.map((doc) => doc.data().title);
 

@@ -3,7 +3,7 @@ import fs from "fs";
 
 // Read and parse the service account JSON manually
 const serviceAccount = JSON.parse(
-  fs.readFileSync("./management-5175f-firebase-adminsdk-fbsvc-8c24eee239.json", "utf8")
+  fs.readFileSync("./management-5175f-firebase-adminsdk-fbsvc-599901acca.json", "utf8")
 );
 
 admin.initializeApp({
